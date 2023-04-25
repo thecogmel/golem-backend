@@ -17,6 +17,6 @@ class LoginSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         user = self.user or self.username_field.get_user(self.validated_data[self.username_field])
         serializer = UserSerializer(user)
-        data['user'] = serializer.data
+        data["user"] = serializer.data
 
         return data

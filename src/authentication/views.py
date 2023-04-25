@@ -1,9 +1,9 @@
-from rest_framework import viewsets, status, generics
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import generics, status, viewsets
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from .models import User
-from .serializers import UserSerializer, LoginSerializer
+from .serializers import LoginSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -14,6 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     class Meta:
         model = User
         fields = "__all__"
+
 
 class LoginViewSet(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -33,4 +34,3 @@ class LoginViewSet(generics.GenericAPIView):
             },
             status=status.HTTP_200_OK,
         )
-
