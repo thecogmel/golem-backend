@@ -27,3 +27,8 @@ class LoginSerializer(TokenObtainPairSerializer):
 
 class LogoutSerializer(serializers.Serializer):
     refresh = serializers.CharField()
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True, allow_blank=False)
+    new_password = serializers.CharField(required=True, allow_blank=False)

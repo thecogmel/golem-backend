@@ -2,14 +2,22 @@ import jwt
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status, viewsets
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from .models import User
-from .serializers import LoginSerializer, LogoutSerializer, UserSerializer
+from .serializers import (
+    LoginSerializer,
+    LogoutSerializer,
+    ResetPasswordSerializer,
+    UserSerializer,
+)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -84,3 +92,33 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ResetPasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = ResetPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = User.objects.get(email=serializer.validated_data["email"])
+
+        if not user:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={"detail": "Usuário não encontrado."},
+            )
+
+        if user.is_superuser or user.is_staff:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"detail": "Não é possível resetar a senha deste usuário."},
+            )
+
+        user.set_password(serializer.validated_data["new_password"])
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={"detail": "Password resetado com sucesso."},
+        )
