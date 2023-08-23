@@ -1,21 +1,8 @@
-from typing import Optional, TypedDict
-
 from django.contrib.auth.models import BaseUserManager
-from django.db.models import TextChoices
-
-
-class UserType(TypedDict):
-    name: str
-    email: str
-    username: str
-    role: TextChoices
-    password: str
-    sector: Optional[str]
-    office: Optional[str]
 
 
 class UserManager(BaseUserManager):
-    def create(self, **kwargs: UserType):
+    def create(self, **kwargs):
         password = kwargs.pop("password")
         if email := kwargs.pop("email"):
             email = self.normalize_email(email).lower()

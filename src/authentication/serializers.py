@@ -7,7 +7,18 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = [
+            "id",
+            "email",
+            "username",
+            "name",
+            "is_active",
+            "is_staff",
+            "is_superuser",
+            "role",
+            "office",
+            "sector",
+        ]
 
 
 class LoginSerializer(TokenObtainPairSerializer):
@@ -31,4 +42,3 @@ class LogoutSerializer(serializers.Serializer):
 
 class ResetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True, allow_blank=False)
-    new_password = serializers.CharField(required=True, allow_blank=False)

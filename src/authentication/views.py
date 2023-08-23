@@ -25,10 +25,6 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    class Meta:
-        model = User
-        fields = "__all__"
-
 
 class LoginViewSet(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -38,16 +34,7 @@ class LoginViewSet(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        return Response(
-            {
-                "tokens": {
-                    "access": serializer.validated_data["access"],
-                    "refresh": serializer.validated_data["refresh"],
-                },
-                "user": serializer.validated_data["user"],
-            },
-            status=status.HTTP_200_OK,
-        )
+        return Response(serializer.validated_data, status.HTTP_200_OK)
 
 
 class RefreshTokenView(generics.GenericAPIView):
