@@ -18,6 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
             "role",
             "office",
             "sector",
+            "password",
         ]
 
 

@@ -11,6 +11,9 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
+from golem.helpers import generate_random_string
+
+from .mails import mail_reset_password
 from .models import User
 from .serializers import (
     LoginSerializer,
@@ -102,10 +105,10 @@ class ResetPasswordView(APIView):
                 data={"detail": "Não é possível resetar a senha deste usuário."},
             )
 
-        user.set_password(serializer.validated_data["new_password"])
-        user.save()
-
+        mail_reset_password(user, generate_random_string())
         return Response(
             status=status.HTTP_200_OK,
-            data={"detail": "Password resetado com sucesso."},
+            data={
+                "detail": "Enviamos o e-mail com as instruções de recuperação de senha.",
+            },
         )
