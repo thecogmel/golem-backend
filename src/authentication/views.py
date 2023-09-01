@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
-from golem.helpers import generate_random_string
+from golem.helpers import generate_random_string, get_and_delete_from_cache
 
 from .mails import mail_reset_password
 from .models import User
@@ -19,6 +19,7 @@ from .serializers import (
     LoginSerializer,
     LogoutSerializer,
     ResetPasswordSerializer,
+    UpdatePasswordSerializer,
     UserSerializer,
 )
 
@@ -110,5 +111,22 @@ class ResetPasswordView(APIView):
             status=status.HTTP_200_OK,
             data={
                 "detail": "Enviamos o e-mail com as instruções de recuperação de senha.",
+            },
+        )
+
+
+class UpdatePasswordView(APIView):
+    """TODO: Implement this view."""
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UpdatePasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "token": get_and_delete_from_cache(serializer.validated_data["token"]),
             },
         )

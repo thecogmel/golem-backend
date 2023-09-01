@@ -43,3 +43,7 @@ class LogoutSerializer(serializers.Serializer):
 
 class ResetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True, allow_blank=False)
+
+
+class UpdatePasswordSerializer(serializers.Serializer):
+    token = serializers.CharField(required=True, allow_blank=False)

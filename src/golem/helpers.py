@@ -13,7 +13,6 @@ def generate_random_string():
 
 
 def get_and_delete_from_cache(key):
-    value = cache.get(key)
-    cache.delete(key)
+    """cache.delete(key)"""
 
-    return value
+    return cache.get(key)
