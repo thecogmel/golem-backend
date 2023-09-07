@@ -116,17 +116,31 @@ class ResetPasswordView(APIView):
 
 
 class UpdatePasswordView(APIView):
-    """TODO: Implement this view."""
-
     permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = UpdatePasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        user = User.objects.get(email=serializer.validated_data["email"])
+
+        if get_and_delete_from_cache(serializer.validated_data["token"]) is None:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"detail": "Token inválido."},
+            )
+
+        if not user:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={"detail": "Usuário não encontrado."},
+            )
+
+        user.set_password(serializer.validated_data["password"])
+        user.save()
 
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "token": get_and_delete_from_cache(serializer.validated_data["token"]),
+                "detail": "Senha atualiza com sucesso.",
             },
         )
