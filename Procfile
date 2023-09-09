@@ -1,6 +1,6 @@
-web: python manage.py runserver
+web: python src/manage.py runserver
 web: gunicorn honeyhub-back.wsgi
 
-release: python manage.py makemigrations --noinput
-release: python manage.py collectstatic --noinput
-release: python manage.py migrate --noinput
+release: python src/manage.py makemigrations --noinput
+release: python src/manage.py collectstatic --noinput
+release: python src/manage.py migrate --noinput
