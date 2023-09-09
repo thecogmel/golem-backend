@@ -32,7 +32,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_ORIGINS = ["http://*", "https://*"]
+ALLOWED_ORIGINS = [
+    "http://*",
+    "https://*",
+    "http://*.herokuapp.com",
+    "https://*.herokuapp.com",
+]
 CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
 
 CORS_ALLOW_ALL_ORIGINS = True
