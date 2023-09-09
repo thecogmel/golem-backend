@@ -1,4 +1,4 @@
 web: gunicorn restaurante.wsgi
-release: python manage.py makemigrations --noinput
-release: python manage.py collectstatic --noinput
-release: python manage.py migrate --noinput
+release: src/manage.py makemigrations --noinput
+release: src/manage.py collectstatic --noinput
+release: src/manage.py migrate --noinput
