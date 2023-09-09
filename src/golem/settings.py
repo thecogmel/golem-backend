@@ -32,10 +32,14 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+""" ALLOWED_HOSTS = ["*"] """
 
 CORS_ALLOW_ALL_ORIGINS = True
-CSRF_TRUSTED_ORIGINS = ["https://*"]
+
+ALLOWED_HOSTS = ["https://honeyhub-back-478bc2070c41.herokuapp.com/"]
+CSRF_TRUSTED_ORIGINS = ["https://https://honeyhub-back-478bc2070c41.herokuapp.com/"]
+CSRF_ALLOWED_ORIGINS = ["https://https://honeyhub-back-478bc2070c41.herokuapp.com/"]
+CORS_ORIGINS_WHITELIST = ["https://https://honeyhub-back-478bc2070c41.herokuapp.com/"]
 
 # Application definition
 
