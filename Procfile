@@ -1,4 +1,3 @@
-web: gunicorn golem.wsgi
-release: src/manage.py makemigrations --noinput
-release: src/manage.py collectstatic --noinput
-release: src/manage.py migrate --noinput
+heroku buildpacks:clear
+heroku buildpacks:add https://github.com/moneymeets/python-poetry-buildpack.git
+heroku buildpacks:add heroku/python
