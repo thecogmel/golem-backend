@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+import django_heroku
 from django.utils.timezone import timedelta
 from dotenv import load_dotenv
 
@@ -195,3 +196,4 @@ CACHES = {
         "LOCATION": "unique-snowflake",
     },
 }
+django_heroku.settings(locals())
