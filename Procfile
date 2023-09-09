@@ -1,3 +1,4 @@
-heroku buildpacks:clear
-heroku buildpacks:add https://github.com/moneymeets/python-poetry-buildpack.git
-heroku buildpacks:add heroku/python
+web: gunicorn restaurante.wsgi
+release: python manage.py makemigrations --noinput
+release: python manage.py collectstatic --noinput
+release: python manage.py migrate --noinput
