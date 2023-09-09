@@ -1,3 +1,4 @@
+web: poetry shell
 web: python src/manage.py runserver
 web: gunicorn honeyhub-back.wsgi
 
