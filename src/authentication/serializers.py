@@ -18,8 +18,8 @@ class UserSerializer(serializers.ModelSerializer):
             "role",
             "office",
             "sector",
-            "password",
         ]
+        extra_kwargs = {"password": {"write_only": True}}
 
 
 class LoginSerializer(TokenObtainPairSerializer):
@@ -31,8 +31,7 @@ class LoginSerializer(TokenObtainPairSerializer):
         user = self.user or self.username_field.get_user(
             self.validated_data[self.username_field],
         )
-        serializer = UserSerializer(user)
-        data["user"] = serializer.data
+        data = {"tokens": data, "user": UserSerializer(user).data}
 
         return data
 
