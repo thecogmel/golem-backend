@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "responsible_user",
+                    "responsible",
                     models.ForeignKey(
                         blank=True,
                         null=True,

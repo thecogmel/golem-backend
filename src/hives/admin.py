@@ -9,7 +9,7 @@ class HiveAdmin(admin.ModelAdmin):
         "name",
         "description",
         "status",
-        "responsible_user",
+        "responsible",
         "created",
         "modified",
     )

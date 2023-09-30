@@ -1,14 +1,15 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
 
 class Hive(TimeStampedModel):
     class Roles(models.TextChoices):
-        HEALTHY = "HEALTHY", "Saudável"
-        DECLINING = "DECLINING", "Declínio"
-        DEAD_OR_ABANDONED = "DEAD_OR_ABANDONED", "Morta ou abandonada"
+        HEALTHY = "HEALTHY", _("Healthy")
+        DECLINING = "DECLINING", _("Declining")
+        DEAD_OR_ABANDONED = "DEAD_OR_ABANDONED", _("Dead or Abandoned")
 
-    responsible_user = models.ForeignKey(
+    responsible = models.ForeignKey(
         "authentication.User",
         on_delete=models.SET_NULL,
         null=True,

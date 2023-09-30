@@ -6,7 +6,7 @@ from .models import Hive
 
 
 class HiveSerializer(serializers.ModelSerializer):
-    responsible_user = UserSerializer(many=False)
+    responsible = UserSerializer(many=False, required=False)
 
     class Meta:
         model = Hive
@@ -15,7 +15,7 @@ class HiveSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "status",
-            "responsible_user",
+            "responsible",
             "created",
             "modified",
         ]
