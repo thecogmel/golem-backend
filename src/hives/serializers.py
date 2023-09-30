@@ -6,8 +6,6 @@ from .models import Hive
 
 
 class HiveSerializer(serializers.ModelSerializer):
-    responsible = UserSerializer(many=False, required=False)
-
     class Meta:
         model = Hive
         fields = [
@@ -19,3 +17,10 @@ class HiveSerializer(serializers.ModelSerializer):
             "created",
             "modified",
         ]
+
+    # Ao criar solicita apenas o ID do usuário, mas ao retornar o objeto completo
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.responsible is not None:
+            data["responsible"] = UserSerializer(instance.responsible).data
+        return data
