@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from .models import Hive
+from .models import Collection, Hive
 
 
 class HiveAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "name",
-        "description",
+        "comments",
         "status",
         "responsible",
         "created",
@@ -15,4 +15,15 @@ class HiveAdmin(admin.ModelAdmin):
     )
 
 
+class CollectionAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "quantity",
+        "registered_by",
+        "created",
+        "modified",
+    )
+
+
 admin.site.register(Hive, HiveAdmin)
+admin.site.register(Collection, CollectionAdmin)

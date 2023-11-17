@@ -16,7 +16,7 @@ class Hive(TimeStampedModel):
         blank=True,
     )
     name = models.CharField("Nome", max_length=255)
-    description = models.TextField("Descrição", max_length=255)
+    comments = models.TextField("Observações", max_length=255, default="")
     status = models.CharField(
         "Status",
         max_length=30,
@@ -26,3 +26,22 @@ class Hive(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+
+class Collection(TimeStampedModel):
+    hive = models.ForeignKey(
+        "hives.Hive",
+        on_delete=models.PROTECT,
+        null=False,
+        blank=False,
+    )
+    registered_by = models.ForeignKey(
+        "authentication.User",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    quantity = models.IntegerField("Quantidade")
+
+    def __str__(self):
+        return self.quantity
