@@ -21,7 +21,7 @@ class UserManager(BaseUserManager):
             name=name,
             username=username,
             password=password,
-            role=self.model.Roles.ADMIN,
+            role=self.model.Roles.MEMBER,
             is_superuser=True,
             is_staff=True,
         )

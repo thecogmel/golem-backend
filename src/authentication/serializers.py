@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "username",
             "name",
+            "password",
             "is_active",
             "is_staff",
             "is_superuser",
