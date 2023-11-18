@@ -20,6 +20,7 @@ from .serializers import (
     LogoutSerializer,
     ResetPasswordSerializer,
     UpdatePasswordSerializer,
+    UserProfileSerializer,
     UserSerializer,
 )
 
@@ -144,3 +145,11 @@ class UpdatePasswordView(APIView):
                 "detail": "Senha atualiza com sucesso.",
             },
         )
+
+
+class UserProfileView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserProfileSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

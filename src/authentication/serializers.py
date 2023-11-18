@@ -21,6 +21,21 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "username",
+            "name",
+            "is_active",
+            "is_staff",
+            "is_superuser",
+            "role",
+        ]
+
+
 class LoginSerializer(TokenObtainPairSerializer):
     email = serializers.EmailField()
     password = serializers.CharField()
