@@ -9,7 +9,12 @@ class HiveAdmin(admin.ModelAdmin):
         "name",
         "comments",
         "status",
-        "responsible",
+        "queen_status",
+        "q_cf",
+        "q_total",
+        "q_ca",
+        "q_cv",
+        "q_ci",
         "created",
         "modified",
     )

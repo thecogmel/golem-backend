@@ -13,17 +13,22 @@ class HiveSerializer(serializers.ModelSerializer):
             "name",
             "comments",
             "status",
-            "responsible",
+            "queen_status",
+            "q_cf",
+            "q_total",
+            "q_ca",
+            "q_cv",
+            "q_ci",
             "created",
             "modified",
         ]
 
     # Ao criar solicita apenas o ID do usuário, mas ao retornar o objeto completo
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        if instance.responsible is not None:
-            data["responsible"] = UserSerializer(instance.responsible).data
-        return data
+    # def to_representation(self, instance):
+    #    data = super().to_representation(instance)
+    #    if instance.responsible is not None:
+    #        data["responsible"] = UserSerializer(instance.responsible).data
+    #    return data
 
     """ def update(self, instance, validated_data):
         old_instance = instance
