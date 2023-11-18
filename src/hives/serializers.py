@@ -25,6 +25,18 @@ class HiveSerializer(serializers.ModelSerializer):
             data["responsible"] = UserSerializer(instance.responsible).data
         return data
 
+    """ def update(self, instance, validated_data):
+        old_instance = instance
+        instance = super().update(instance, validated_data)
+        updated_fields = instance.tracker.changed()
+        old_fields = {}
+        for field in updated_fields:
+            old_fields[field] = getattr(old_instance, field)
+        HiveSnapshot.objects.create(
+            changed_by=self.context["request"].user,
+            **old_fields,
+        ) """
+
 
 class CollectionSerializer(serializers.ModelSerializer):
     registered_by = serializers.HiddenField(
