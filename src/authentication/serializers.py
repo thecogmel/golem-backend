@@ -62,3 +62,7 @@ class UpdatePasswordSerializer(serializers.Serializer):
     token = serializers.CharField(required=True, allow_blank=False)
     email = serializers.EmailField(required=True, allow_blank=False)
     password = serializers.CharField(required=True, allow_blank=False)
+
+
+class PrivateResetPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(required=True, allow_blank=False)

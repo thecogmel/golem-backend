@@ -18,6 +18,7 @@ from .models import User
 from .serializers import (
     LoginSerializer,
     LogoutSerializer,
+    PrivateResetPasswordSerializer,
     ResetPasswordSerializer,
     UpdatePasswordSerializer,
     UserProfileSerializer,
@@ -153,3 +154,22 @@ class UserProfileView(generics.GenericAPIView):
     def get(self, request):
         serializer = UserProfileSerializer(request.user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class PrivateResetPasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = PrivateResetPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = User.objects.get(email=request.user.email)
+
+        user.set_password(serializer.validated_data["password"])
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "detail": "Senha atualiza com sucesso.",
+            },
+        )
