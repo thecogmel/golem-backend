@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import check_password
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -65,4 +66,12 @@ class UpdatePasswordSerializer(serializers.Serializer):
 
 
 class PrivateResetPasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True, allow_blank=False)
     password = serializers.CharField(required=True, allow_blank=False)
+
+    def validate_old_password(self, value):
+        user = self.context["request"].user
+        if not check_password(value, user.password):
+            error_message = "Senha atual incorreta."
+            raise serializers.ValidationError(error_message)
+        return value

@@ -160,7 +160,10 @@ class PrivateResetPasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        serializer = PrivateResetPasswordSerializer(data=request.data)
+        serializer = PrivateResetPasswordSerializer(
+            data=request.data,
+            context={"request": request},
+        )
         serializer.is_valid(raise_exception=True)
         user = User.objects.get(email=request.user.email)
 
