@@ -7,7 +7,7 @@ from rest_framework.permissions import (
 from rest_framework.response import Response
 
 from .models import Collection, Hive
-from .serializers import CollectionSerializer, HiveSerializer
+from .serializers import ChangesSerializer, CollectionSerializer, HiveSerializer
 
 
 class HiveViewSet(viewsets.ModelViewSet):
@@ -23,6 +23,15 @@ class HiveViewSet(viewsets.ModelViewSet):
         )
 
         return Response(collection_average)
+
+    @action(detail=True, methods=["get"])
+    def changes(self, request, pk=None):
+        hive = self.get_object()
+        changes = hive.get_changes()
+
+        serializer = ChangesSerializer(changes, many=True)
+
+        return Response(serializer.data)
 
 
 class CollectionViewSet(viewsets.ModelViewSet):

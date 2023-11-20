@@ -70,3 +70,9 @@ class CollectionSerializer(serializers.ModelSerializer):
 
     def get_registered_by_info(self, obj):
         return UserSerializer(obj.registered_by).data
+
+
+class ChangesSerializer(serializers.Serializer):
+    modified = serializers.DateTimeField()
+    registered_by = serializers.CharField()
+    changed_fields = serializers.ListField(child=serializers.CharField())

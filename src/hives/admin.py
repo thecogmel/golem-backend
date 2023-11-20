@@ -15,6 +15,7 @@ class HiveAdmin(admin.ModelAdmin):
         "q_ca",
         "q_cv",
         "q_ci",
+        "history",
         "created",
         "modified",
     )
@@ -25,6 +26,7 @@ class CollectionAdmin(admin.ModelAdmin):
         "id",
         "quantity",
         "registered_by",
+        "history",
         "created",
         "modified",
     )

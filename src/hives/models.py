@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 from model_utils.tracker import FieldTracker
+from simple_history.models import HistoricalRecords
 
 
 class Hive(TimeStampedModel):
@@ -66,6 +67,41 @@ class Hive(TimeStampedModel):
     )
 
     comments = models.TextField("Observações", max_length=255, default="")
+    history = HistoricalRecords()
+
+    def get_changes(self):
+        changes = []
+
+        # Obtém todas as versões do histórico ordenadas pela data
+        history_versions = self.history.all().order_by("history_date")
+
+        # Compara cada versão com a versão anterior
+        for i in range(1, len(history_versions)):
+            previous_version = history_versions[i - 1]
+            current_version = history_versions[i]
+
+            # Compara os campos do modelo para identificar as alterações
+            changed_fields = []
+
+            for field in self._meta.fields:
+                field_name = field.name
+
+                previous_value = getattr(previous_version, field_name)
+                current_value = getattr(current_version, field_name)
+
+                if previous_value != current_value:
+                    changed_fields.append(field_name)
+
+            # Se houver alterações, adiciona à lista de mudanças
+            if changed_fields:
+                change_info = {
+                    "modified": current_version.history_date,
+                    "registered_by": current_version.history_user,
+                    "changed_fields": changed_fields,
+                }
+                changes.append(change_info)
+
+        return changes
 
     tracker = FieldTracker()
 
@@ -116,6 +152,7 @@ class Collection(TimeStampedModel):
         blank=True,
     )
     quantity = models.IntegerField("Quantidade")
+    history = HistoricalRecords()
 
     def __str__(self):
-        return self.quantity
+        return str(self.quantity)
