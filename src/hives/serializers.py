@@ -18,7 +18,6 @@ class HiveSerializer(serializers.ModelSerializer):
             "q_total",
             "q_ca",
             "q_cv",
-            "q_ci",
             "created",
             "modified",
         ]

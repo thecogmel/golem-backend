@@ -14,7 +14,7 @@ class Hive(TimeStampedModel):
 
     class SimpleStatus(models.TextChoices):
         REGULAR = "REGULAR", _("REGULAR")
-        GOOD = "DEVELOPMENT", _("DEVELOPMENT")
+        GOOD = "GOOD", _("GOOD")
         WEAK = "WEAK", _("WEAK")
 
     name = models.CharField("Nome", max_length=255)
@@ -53,13 +53,6 @@ class Hive(TimeStampedModel):
     )
     q_cv = models.DecimalField(
         "Quantidade de quadros com vazio",
-        null=True,
-        blank=True,
-        max_digits=5,
-        decimal_places=2,
-    )
-    q_ci = models.DecimalField(
-        "Quantidade de quadros com insetos",
         null=True,
         blank=True,
         max_digits=5,
